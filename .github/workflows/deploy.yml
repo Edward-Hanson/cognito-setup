@@ -1,0 +1,40 @@
+name: Deploy SAM DynamoDB Stack
+
+on:
+  push:
+    paths:
+      - template.yml
+      - .github/workflows/deploy.yml
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::605134436600:role/SAMRole
+          aws-region: eu-west-1
+
+      - name: Install AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: Deploy SAM Stack
+        run: |
+          sam deploy \
+            --stack-name cognito-resources \
+            --capabilities CAPABILITY_IAM \
+            --region eu-west-1 \
+            --resolve-s3 \
+            --no-confirm-changeset
+            
