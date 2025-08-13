@@ -8,11 +8,16 @@ Globals:
     MemorySize: 128
     Runtime: python3.12
     Handler: app.lambda_handler
+  Api:
+    Auth:
+      DefaultAuthorizer: CognitoAuth
+      Authorizers:
+        CognitoAuth:
+          UserPoolArn: !GetAtt UserPool.Arn
 
 Resources:
 
   ################################################## Cognito ####################################################
-
 
   UserPool:
     Type: AWS::Cognito::UserPool
@@ -87,7 +92,6 @@ Resources:
       UserPoolId: !Ref UserPool
       Precedence: 2
 
-
   ################################################## APIs & Functions ##########################################
 
   AdminInviteFunction:
@@ -139,16 +143,6 @@ Resources:
       FunctionName: !Ref CustomMessageFunction
       Principal: cognito-idp.amazonaws.com
       SourceArn: !GetAtt UserPool.Arn
-
-  # API Gateway Cognito Authorizer
-  CognitoAuth:
-    Type: AWS::ApiGateway::Authorizer
-    Properties:
-      Name: CognitoUserPoolAuth
-      Type: COGNITO_USER_POOLS
-      IdentitySource: method.request.header.Authorization
-      ProviderARNs:
-        - !GetAtt UserPool.Arn
 
 Outputs:
   UserPoolId:
