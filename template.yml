@@ -42,10 +42,6 @@ Resources:
           AttributeDataType: String
           Mutable: true
           Required: false
-        - Name: country
-          AttributeDataType: String
-          Mutable: true
-          Required: false
         - Name: city
           AttributeDataType: String
           Mutable: true
@@ -168,4 +164,3 @@ Outputs:
   ApiGatewayUrl:
     Description: Base URL for API Gateway
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
-    
