@@ -5,6 +5,8 @@ on:
     paths:
       - template.yml
       - .github/workflows/deploy.yml
+      -  custom_message/app.py
+      -  admin_invite/app.py
     branches:
       - master
 
@@ -37,4 +39,3 @@ jobs:
             --region eu-west-1 \
             --resolve-s3 \
             --no-confirm-changeset
-            
