@@ -14,10 +14,14 @@ Globals:
       Authorizers:
         CognitoAuth:
           UserPoolArn: !GetAtt UserPool.Arn
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS,DELETE,PUT'"
+      AllowHeaders: "'Content-Type,Authorization'"
+      AllowOrigin: "'http://localhost:4200'"
 
 Resources:
 
-  ################################################## Cognito ####################################################
+################################################## Cognito ####################################################
 
   UserPool:
     Type: AWS::Cognito::UserPool
@@ -39,6 +43,10 @@ Resources:
           Mutable: true
           Required: false
         - Name: country
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+        - Name: city
           AttributeDataType: String
           Mutable: true
           Required: false
@@ -92,7 +100,7 @@ Resources:
       UserPoolId: !Ref UserPool
       Precedence: 2
 
-  ################################################## APIs & Functions ##########################################
+################################################## APIs & Functions ##########################################
 
   AdminInviteFunction:
     Type: AWS::Serverless::Function
