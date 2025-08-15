@@ -129,7 +129,7 @@ Resources:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
-          - Effect: Allow
+          - Effect: Deny
             Principal:
               Federated: cognito-identity.amazonaws.com
             Action: sts:AssumeRoleWithWebIdentity
