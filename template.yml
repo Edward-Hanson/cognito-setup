@@ -17,7 +17,7 @@ Globals:
     Cors:
       AllowMethods: "'GET,POST,OPTIONS,DELETE,PUT'"
       AllowHeaders: "'Content-Type,Authorization'"
-      AllowOrigin: "'http://localhost:4200'"
+      AllowOrigin: "'http://localhost:4200,https://dev.d2zgxshg38rb8v.amplifyapp.com'"
 
 Resources:
 
