@@ -100,6 +100,55 @@ Resources:
       UserPoolId: !Ref UserPool
       Precedence: 2
 
+
+
+  IdentityPoolAuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: IncidentReportingAuthRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud: !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                cognito-identity.amazonaws.com:amr: authenticated
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonCognitoReadOnly
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole 
+ 
+  IdentityPoolUnauthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: IncidentReportingUnauthRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud: !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                cognito-identity.amazonaws.com:amr: unauthenticated
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonCognitoReadOnly
+
+  IdentityPoolRoleAttachment:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        authenticated: !GetAtt IdentityPoolAuthRole.Arn
+        unauthenticated: !GetAtt IdentityPoolUnauthRole.Arn
+
 ################################################## APIs & Functions ##########################################
 
   AdminInviteFunction:
