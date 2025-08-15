@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         email = body["email"]
         name = body["name"]
         region = body["region"]
-        country = body["country"]
+        city = body["city"]
         telephone = body["telephone"]
         role = body["role"]
 
@@ -26,7 +26,7 @@ def lambda_handler(event, context):
                 {"Name": "email", "Value": email},
                 {"Name": "name", "Value": name},
                 {"Name": "custom:region", "Value": region},
-                {"Name": "custom:country", "Value": country},
+                {"Name": "custom:city", "Value": city},
                 {"Name": "custom:telephone", "Value": telephone},
                 {"Name": "email_verified", "Value": "true"}
             ]
