@@ -2,7 +2,7 @@ def lambda_handler(event, context):
     trigger = event["triggerSource"]
     user_email = event["request"]["userAttributes"].get("email", "Unknown email")
 
-    brand_name = "MARP"
+    brand_name = "CMRP"
     brand_color = "#1A1A1A"  # Bold minimal dark tone
     accent_color = "#D72638" # A striking red accent for buttons or highlights
 
